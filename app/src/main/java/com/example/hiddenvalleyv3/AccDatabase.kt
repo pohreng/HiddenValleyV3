@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper
 class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory, version){
 
     override fun onCreate(p0: SQLiteDatabase?){
-        p0?.execSQL("create table nUser(id integer primary key autoincrement," +
-                "username varchar(15),pass varchar(15))")
         p0?.execSQL("create table info(id integer primary key autoincrement,"+
                 "username varchar(15), pass varchar(15),points integer)")
         /*p0?.execSQL("create table newUser(username varchar(15) primary key autoincrement," +
@@ -20,7 +18,6 @@ class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory,
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, oldVersion: Int, newVersion: Int){
-        p0?.execSQL("DROP TABLE IF EXISTS 'nUser'")
         p0?.execSQL("DROP TABLE IF EXISTS 'info'")
         onCreate(p0)
     }
@@ -30,21 +27,17 @@ class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory,
         val values: ContentValues = ContentValues()
         val info: ContentValues = ContentValues()
 
-        values.put("username", username)
-        values.put("pass", pass)
-
         info.put("username", username)
         info.put("pass", pass)
         info.put("points", 0)
 
-        db.insert("nUser", null, values)
         db.insert("info", null, info)
         db.close()
     }
 
     fun verifyUsername(username: String): Boolean {
         val db=  writableDatabase
-        val query= "select * from nUser where username = '$username'"
+        val query= "select * from info where username = '$username'"
         val cursor= db.rawQuery(query,null)
         if ( cursor.count <= 0){
             cursor.close()
@@ -56,7 +49,7 @@ class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory,
 
     fun userPresent(username: String,pass: String): Boolean {
         val db=  writableDatabase
-        val query= "select * from nUser where username = '$username' and pass = '$pass'"
+        val query= "select * from info where username = '$username' and pass = '$pass'"
         val cursor= db.rawQuery(query,null)
         if ( cursor.count <= 0){
             cursor.close()

@@ -3,11 +3,13 @@ package com.example.hiddenvalleyv3
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.after_login.*
+import kotlinx.android.synthetic.main.game.*
 import kotlinx.android.synthetic.main.login.*
 import kotlinx.android.synthetic.main.user_registration.*
 import kotlinx.android.synthetic.main.user_registration.pass
@@ -16,6 +18,8 @@ import kotlinx.android.synthetic.main.user_registration.username
 class  MainActivity : AppCompatActivity() {
 
     lateinit var handler: AccDatabase
+
+    var manager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,15 +73,31 @@ class  MainActivity : AppCompatActivity() {
                     val clickerCal = findViewById<ImageView>(R.id.calculateIMG)
 
                     clickerLetter.setOnClickListener{
-                        showLetGame()
+                        setContentView(R.layout.game)
+                        home_button.setOnClickListener{
+                            showHome()
+                        }
+                        showLetterGame()
                     }
                     clickerNumber.setOnClickListener{
-                        showNumGame()
+                        setContentView(R.layout.game)
+                        home_button.setOnClickListener{
+                            showHome()
+                        }
+                        showNumberGame()
                     }
                     clickerMatch.setOnClickListener{
+                        setContentView(R.layout.game)
+                        home_button.setOnClickListener{
+                            showHome()
+                        }
                         showMatchGame()
                     }
                     clickerCal.setOnClickListener{
+                        setContentView(R.layout.game)
+                        home_button.setOnClickListener{
+                            showHome()
+                        }
                         showCalGame()
                     }
             }
@@ -87,7 +107,34 @@ class  MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    private fun showCalGame(){
+        val transaction = manager.beginTransaction()
+        val fragment = Cal_game_fragment()
+        transaction.replace(R.id.fragment_holder,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+    private fun showLetterGame(){
+        val transaction = manager.beginTransaction()
+        val fragment = Letter_game_fragment()
+        transaction.replace(R.id.fragment_holder,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+    private fun showMatchGame(){
+        val transaction = manager.beginTransaction()
+        val fragment = Match_game_fragment()
+        transaction.replace(R.id.fragment_holder,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+    private fun showNumberGame(){
+        val transaction = manager.beginTransaction()
+        val fragment = Number_game_fragment()
+        transaction.replace(R.id.fragment_holder,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
     private fun showUserReg(){
         registration_layout.visibility=View.VISIBLE
         login_layout.visibility=View.GONE
@@ -112,7 +159,13 @@ class  MainActivity : AppCompatActivity() {
         main123.visibility=View.GONE
         afterLogin_layout.visibility=View.VISIBLE
     }
-    private fun showNumGame(){
+    private fun showAllGame(){
+        registration_layout.visibility=View.GONE
+        login_layout.visibility=View.GONE
+        main123.visibility=View.GONE
+        afterLogin_layout.visibility=View.GONE
+    }
+    /*private fun showNumGame(){
         number_game.visibility=View.VISIBLE
         registration_layout.visibility=View.GONE
         login_layout.visibility=View.GONE
@@ -139,5 +192,6 @@ class  MainActivity : AppCompatActivity() {
         login_layout.visibility=View.GONE
         main123.visibility=View.GONE
         afterLogin_layout.visibility=View.GONE
-    }
+    }*/
+
 }
