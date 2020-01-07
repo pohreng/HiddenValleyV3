@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
+            android:fontFamily="fantasy"
             android:background="@drawable/btn_round_edge">
 
             <Button

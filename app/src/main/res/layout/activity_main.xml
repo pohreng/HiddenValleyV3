@@ -20,11 +20,11 @@
             android:layout_gravity="center_vertical"
             android:padding="20dp">
                     <ImageView
-                        android:id="@+id/profile"
+                        android:id="@+id/logo"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toStartOf="@+id/login_button"
-                        tools:srcCompat="@drawable/profile_pic" />
+                        android:src="@drawable/logo"/>
                     <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="100dp"
@@ -126,4 +126,12 @@
         android:id="@+id/match_game"
         android:visibility="gone"
         layout="@layout/match_game" />
+    <include
+        android:id="@+id/user_profile"
+        android:visibility="gone"
+        layout="@layout/user_profile" />
+    <include
+        android:id="@+id/user_setting"
+        android:visibility="gone"
+        layout="@layout/user_setting" />
 </RelativeLayout>

@@ -24,7 +24,6 @@ class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory,
 
     fun insertUserData(username: String , pass: String){
         val db: SQLiteDatabase =  writableDatabase
-        val values: ContentValues = ContentValues()
         val info: ContentValues = ContentValues()
 
         info.put("username", username)
@@ -77,6 +76,20 @@ class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory,
         result.close()
         db.close()
         return list
+    }
+    fun increasePoint(username: String , points: Int){
+        val db: SQLiteDatabase =  writableDatabase
+
+        val query = "Select * from info where username = '$username' "
+        val result = db.rawQuery(query,null)
+        if(result.count<=0){
+            val totalpoint = points+ result.getString(result.getColumnIndex("points")).toInt()
+
+            val query1 = "update info set values = "+ totalpoint.toString().toInt() +" where username = '$username'"
+
+            db.rawQuery(query1,null)
+            db.close()
+        }
     }
     companion object{
         internal val dbname = "userDB"
