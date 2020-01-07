@@ -9,23 +9,28 @@
         android:id="@+id/afterLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="60dp"
+        android:paddingTop="20dp"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical">
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
 
-            <LinearLayout
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:orientation="horizontal"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_gravity="center_vertical"
                 android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toStartOf="@+id/login_button"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@drawable/profile_pic" />
                     <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="100dp"
@@ -82,7 +87,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    >
                     <ImageView
                         android:id="@+id/calculateIMG"
                         android:layout_width="120dp"
@@ -100,9 +107,4 @@
                 </LinearLayout>
             </LinearLayout>
     </LinearLayout>
-    <include
-        android:id="@+id/all_game"
-        android:visibility="gone"
-        layout="@layout/game"/>
-
 </RelativeLayout>

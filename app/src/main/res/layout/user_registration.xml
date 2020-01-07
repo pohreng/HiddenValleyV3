@@ -2,54 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@drawable/loginbackground"
     android:id="@+id/registration123">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="250dp">
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Username"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="311dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/pass"
-        android:layout_width="311dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Confirm Password"
+            android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="311dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword" />
+        <Button
+            android:id="@+id/sign_button"
+            android:layout_width="234dp"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:text="SIGN UP" />
 
-    <Button
-        android:id="@+id/sign_button"
-        android:layout_width="234dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="40dp"
-        android:ems="5"
-        android:text="SIGN UP" />
-
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="174dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="65dp"
-        android:ems="5"
-        android:text="BACK" />
-
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:text="BACK" />
+    </LinearLayout>
 
 </LinearLayout>
