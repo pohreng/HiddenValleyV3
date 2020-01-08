@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.after_login.*
 import kotlinx.android.synthetic.main.cal_game.*
 import kotlinx.android.synthetic.main.game.*
 import kotlinx.android.synthetic.main.login.*
+import kotlinx.android.synthetic.main.number_game.*
 import kotlinx.android.synthetic.main.user_profile.*
 import kotlinx.android.synthetic.main.user_registration.*
 import kotlinx.android.synthetic.main.user_registration.pass
@@ -26,7 +27,7 @@ class  MainActivity : AppCompatActivity() {
     lateinit var handler: AccDatabase
     lateinit var diceImage1 : ImageView
     lateinit var diceImage2 : ImageView
-    lateinit var profilePic : ImageView
+    lateinit var starImage : ImageView
 
     //var manager = supportFragmentManager
     //val animationIn = AnimationUtils.loadAnimation(this,R.anim.zoom_in)
@@ -95,6 +96,11 @@ class  MainActivity : AppCompatActivity() {
             }
             clickerNumber.setOnClickListener{
                 showNumGame()
+                starImage = findViewById(R.id.star_img)
+                starImage.setImageResource(R.drawable.star0)
+                num_btn.setOnClickListener{
+                    rollStar()
+                }
             }
             clickerMatch.setOnClickListener{
                 showMatchGame()
@@ -122,8 +128,6 @@ class  MainActivity : AppCompatActivity() {
 
         val randomInt1 = Random().nextInt(6)+1
         val randomInt2 = Random().nextInt(6)+1
-
-        Toast.makeText(this,"button clicked",Toast.LENGTH_SHORT).show()
 
         val dice1 = when (randomInt1) {
             1 -> R.drawable.dice_1
@@ -162,7 +166,7 @@ class  MainActivity : AppCompatActivity() {
         if(ans == total) {
             Toast.makeText(this, "Answer Correct", Toast.LENGTH_SHORT).show()
             val plusPoints = 10 + streak
-            handler.increasePoint(login_username.text.toString(),plusPoints)
+            handler.increasePoint(login_username.text.toString(),login_pass.text.toString(),plusPoints)
             val newStreak = streak + 0
             cal_game_streak.text = newStreak.toString()
             rollDice()
@@ -170,6 +174,51 @@ class  MainActivity : AppCompatActivity() {
         else {
             val newStreak = 0
             cal_game_streak.text = newStreak.toString()
+            Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun rollStar(){
+
+        val randomInt1 = Random().nextInt(8)+1
+
+        val star = when (randomInt1) {
+            1 -> R.drawable.star1
+            2 -> R.drawable.star2
+            3 -> R.drawable.star3
+            4 -> R.drawable.star4
+            5 -> R.drawable.star5
+            6 -> R.drawable.star6
+            7 -> R.drawable.star7
+            else -> R.drawable.star8
+        }
+        starImage.setImageResource(star)
+
+        if(num_answer.text.toString().isNotEmpty()) {
+            ans_number.setOnClickListener {
+                countTotalStar(randomInt1)
+            }
+        }else{
+            Toast.makeText(this, "Please Enter Answer", Toast.LENGTH_SHORT).show()
+        }
+        backOrNext_number.setOnClickListener{
+            afterLoginPages()
+        }
+    }
+    private fun countTotalStar(num1 : Int){
+        val ans = num_answer.text.toString().toInt()
+        val streak = num_game_streak.text.toString().toInt() + 1
+        if(ans == num1) {
+            Toast.makeText(this, "Answer Correct", Toast.LENGTH_SHORT).show()
+            val plusPoints = 10 + streak
+            handler.increasePoint(login_username.text.toString(),login_pass.text.toString(),plusPoints)
+            val newStreak = streak + 0
+            num_game_streak.text = newStreak.toString()
+            rollStar()
+        }
+        else {
+            val newStreak = 0
+            num_game_streak.text = newStreak.toString()
             Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show()
         }
     }
@@ -265,23 +314,42 @@ class  MainActivity : AppCompatActivity() {
     }*/
 
     private fun profile(){
+        var data1 = handler.retrieveData(login_username.text.toString())
         showProfile()
+        current_username1.text = ""
+        for(i in 0..(data1.size-1)){
+            current_username1.append(data1.get(i).username)
+        }
+
+
+        var data = handler.retrievePoints(login_username.text.toString())
+        current_points.text = ""
+        for(i in 0..(data.size-1)){
+            current_points.append(data.get(i).points.toString())
+        }
+
 
         btn_point.setOnClickListener{
             profile()
         }
         btn_setting.setOnClickListener{
-            showUserSetting()
+            setting()
         }
     }
     private fun setting(){
+        var data1 = handler.retrieveData(login_username.text.toString())
         showUserSetting()
+        current_username2.text = ""
+        for(i in 0..(data1.size-1)){
+            current_username2.append(data1.get(i).username)
+        }
+
 
         btn_point1.setOnClickListener{
             profile()
         }
         btn_setting1.setOnClickListener{
-            showUserSetting()
+            setting()
         }
     }
     private fun showUserReg(){

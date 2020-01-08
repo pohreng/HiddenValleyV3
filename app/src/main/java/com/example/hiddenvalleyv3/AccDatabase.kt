@@ -77,21 +77,44 @@ class AccDatabase (context: Context): SQLiteOpenHelper(context, dbname, factory,
         db.close()
         return list
     }
-    fun increasePoint(username: String , points: Int){
+    fun increasePoint(username: String , pass: String,points: Int){
         val db: SQLiteDatabase =  writableDatabase
-
+        val info: ContentValues = ContentValues()
         val query = "Select * from info where username = '$username' "
         val result = db.rawQuery(query,null)
         if(result.count<=0){
-            val totalpoint = points+ result.getString(result.getColumnIndex("points")).toInt()
+            val totalpoint = points + result.getString(result.getColumnIndex("points")).toInt()
 
-            val query1 = "update info set values = "+ totalpoint.toString().toInt() +" where username = '$username'"
+            //val query1 = "update info set values points = "+ totalpoint.toString().toInt() +" where username = '$username'"
+            info.put("points", totalpoint.toString().toInt())
 
-            db.rawQuery(query1,null)
+            db.insert("info", null, info)
             db.close()
+
+            //db.rawQuery(query1,null)
+            //db.close()
         }
     }
-    companion object{
+    fun retrievePoints(username: String) : MutableList<User_details>{
+        var list : MutableList<User_details> = ArrayList()
+
+        val db = this.readableDatabase
+        val query = "Select * from info where username = '$username' "
+        val result = db.rawQuery(query,null)
+        if(result.moveToFirst()){
+            do{
+                var user = User_details()
+                user.username = result.getString(result.getColumnIndex("username"))
+                user.password = result.getString(result.getColumnIndex("pass"))
+                user.points = result.getString(result.getColumnIndex("points")).toInt()
+                list.add(user)
+            }while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return list
+    }    companion object{
+
         internal val dbname = "userDB"
         internal val factory = null
         internal val version = 1
